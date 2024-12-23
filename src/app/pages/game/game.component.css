@@ -1,0 +1,22 @@
+:host {
+  --padding: 8px;
+
+  width: calc(100vw - 2 * var(--padding));
+  height: calc(100vh - 2 * var(--padding));
+  padding: var(--padding);
+  display: block;
+}
+
+#top-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.card-pile-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
