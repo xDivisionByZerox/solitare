@@ -1,9 +1,9 @@
-import { Component, computed, effect, inject, WritableSignal } from '@angular/core';
+import { Component, computed, inject, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, fromEvent, map, tap } from 'rxjs';
+import { debounceTime, fromEvent, map } from 'rxjs';
 import { CardPileComponent } from '../../components/card-pile/card-pile.component';
-import { GameStateService } from '../../services/game-state.service';
 import { PlayCard, PlayCardColor, PlayCardValue } from '../../models/card';
+import { GameStateService } from '../../services/game-state.service';
 
 const DISCARD_PILE_CARD_ORDER: PlayCardValue[] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 const PLAYING_PILE_CARD_ORDER: PlayCardValue[] = ['K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2', 'A'];
@@ -21,7 +21,6 @@ export class GameComponent {
   private readonly windowWidth = toSignal(
     fromEvent(window, 'resize').pipe(
       debounceTime(200),
-      tap(() => console.log('rezise')),
       map(() => window.innerWidth),
     ),
     { initialValue: window.innerWidth },
@@ -53,8 +52,6 @@ export class GameComponent {
     if (discardPile) {
       this.moveCardToPile(card, pileCardIsFrom, discardPile);
       return;
-    } else {
-      console.log('no discard pile matches');
     }
 
     const normalPile = this.state.cardPiles.find((pile) => {
@@ -76,20 +73,15 @@ export class GameComponent {
     if (normalPile) {
       this.moveCardToPile(card, pileCardIsFrom, normalPile);
       return;
-    } else {
-      console.log('no normal pile matches');
     }
   }
 
   private moveCardToPile(card: PlayCard, fromPile: WritableSignal<PlayCard[]>, toPile: WritableSignal<PlayCard[]>) {
     fromPile.update((pile) => {
-      console.log('Updating pile', JSON.stringify(pile));
       pile.splice(pile.length - 1, 1);
-      console.log('pile after splicing', JSON.stringify(pile));
       const newTopCard = pile[pile.length - 1];
       if(newTopCard) {
         newTopCard.isVisable = true;
-        console.log('pile after setting new viable state', JSON.stringify(pile));
       }
       return pile;
     });
