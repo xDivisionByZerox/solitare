@@ -21,6 +21,7 @@ import { PlayCard } from '../../models/card';
       outline-color: black;
       outline-style: dotted;
       position: relative;
+      background: rgba(255, 255, 255, 0.5);
     }
 
     app-play-card {

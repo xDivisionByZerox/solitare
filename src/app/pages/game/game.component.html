@@ -5,16 +5,25 @@
     }
   </div>
 
-  <div id="draw-area" style="display: flex">
-    <div class="active-draw-cards">
-      <app-card-pile [width]="cardWidth()" [cards]="state.activeDrawCards()" [mode]="'row'" (onCardClicked)="currentDrawCardAction($event)" />
-    </div>
+  <div id="draw-area" class="card-pile-row">
+    <app-card-pile
+      [width]="cardWidth()"
+      [cards]="state.activeDrawCards()"
+      [mode]="'row'"
+      (onCardClicked)="currentDrawCardAction($event)"
+    />
+    
     <app-card-pile [width]="cardWidth()" [cards]="state.drawPile()" (click)="state.drawNextCards()" />
   </div>
 </div>
 
 <div id="play-area" class="card-pile-row">
   @for (cardPile of state.cardPiles; track $index) {
-    <app-card-pile [width]="cardWidth()" [cards]="cardPile()" [mode]="'column'" (onCardClicked)="tryToPlayCard($event, cardPile)" />
+    <app-card-pile
+      [width]="cardWidth()"
+      [cards]="cardPile()"
+      [mode]="'column'"
+      (onCardClicked)="tryToPlayCard($event, cardPile)"
+    />
   }
 </div>

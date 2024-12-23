@@ -31,18 +31,21 @@ import { PlayCard } from '../../models/card';
     }
 
     .card-back {
-      padding: 2px;
       max-height: 100%;
       max-width: 100%;
       height: 100%;
     }
 
     .card-back-background {
-      background-image: url('/cards/backgrounds/diamond.svg');
+      --spacing: 2px;
+      --size: 8px;
+      background-image: linear-gradient(45deg, #ff0000 25%, transparent 25%, transparent 75%, #ff0000 75%, #ff0000),
+        linear-gradient(-45deg, #ff0000 25%, transparent 25%, transparent 75%, #ff0000 75%, #ff0000);
+      background-size: var(--size) var(--size);
       background-repeat: repeat;
-      background-size: 4px;
-      height: 100%;
-      width: 100%;
+      margin: var(--spacing);
+      height: calc(100% - 2 * var(--spacing));
+      width: calc(100% - 2 * var(--spacing));
     }
   `,
 })
