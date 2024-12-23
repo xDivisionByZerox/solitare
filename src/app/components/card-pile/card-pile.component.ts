@@ -10,7 +10,7 @@ import { PlayCard } from '../../models/card';
         [card]="card"
         [isFrontUp]="card.isVisable"
         [style.z-index]="$index"
-        [style.transform]="mode() === 'stack' ? null : 'translateY(' + 32 * $index + 'px)'"
+        [style.transform]="getTransform($index)"
         (click)="onCardClicked.emit(card)"
       />
     }
@@ -38,9 +38,23 @@ import { PlayCard } from '../../models/card';
 export class CardPileComponent {
   readonly width = input<number>(0);
   readonly cards = input<PlayCard[]>([]);
-  readonly mode = input<'stack' | 'stacked-row'>('stack');
+  readonly mode = input<'stack' | 'column' | 'row'>('stack');
 
   readonly onCardClicked = output<PlayCard>();
 
   readonly height = computed(() => (this.width() / 2) * 3);
+  private readonly transformTranslateOffset = 32;
+
+  getTransform(index: number): string | null {
+    switch (this.mode()) {
+      case 'column':
+        return `translateY(${this.transformTranslateOffset * index}px)`;
+      case 'row':
+        return `translateX(-${this.transformTranslateOffset * index}px)`;
+      default:
+        return null;
+    }
+  }
+
+  cardClicked(card: PlayCard) {}
 }

@@ -33,8 +33,21 @@ export class GameComponent {
     return Math.floor((this.windowWidth() - paddingTotal - gapTotal) / this.state.cardPiles.length);
   });
 
+  currentDrawCardAction(card: PlayCard) {
+    const cardIndex = this.state.activeDrawCards().findIndex((c) => c === card);
+    // The "top card" is the last card of the draw pile, although it is sorted as the first element
+    // in the complete draw pile, because the game state is reversed for the draw cards.
+    // This is because piles can only work botton-up, but the card on index 0
+    // should be the top card
+    if (cardIndex !== this.state.activeDrawCards().length - 1) {
+      return;
+    }
+
+    this.tryToPlayCard(card, this.state.activeDrawCards);
+  }
+
   tryToPlayCard(card: PlayCard, pileCardIsFrom: WritableSignal<PlayCard[]>): void {
-    if(!card.isVisable) {
+    if (!card.isVisable) {
       return;
     }
 
@@ -86,7 +99,7 @@ export class GameComponent {
     fromPile.update((pile) => {
       pile.splice(cardIndex, cardsToMove.length);
       const newTopCard = pile[pile.length - 1];
-      if(newTopCard) {
+      if (newTopCard) {
         newTopCard.isVisable = true;
       }
       return pile;

@@ -7,9 +7,9 @@
 
   <div id="draw-area" style="display: flex">
     <div class="active-draw-cards">
-      {{ state.activeDrawCards().length }}
+      <app-card-pile [width]="cardWidth()" [cards]="state.activeDrawCards()" [mode]="'row'" (onCardClicked)="currentDrawCardAction($event)" />
     </div>
-    <app-card-pile [width]="cardWidth()" [cards]="state.drawPile()" />
+    <app-card-pile [width]="cardWidth()" [cards]="state.drawPile()" (click)="state.drawNextCards()" />
   </div>
 </div>
 
