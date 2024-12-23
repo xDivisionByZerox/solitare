@@ -51,24 +51,27 @@ export class GameComponent {
       return;
     }
 
-    const discardPile = this.state.discardPiles.find((pile) => {
-      const topCard = pile()[pile().length - 1];
-      const correctValue = this.canPlaceCardOnCardByValue({
-        cardOnPile: topCard,
-        cardToPlace: card,
-        cardOrder: DISCARD_PILE_CARD_ORDER,
+    const isLastCard = pileCardIsFrom()[pileCardIsFrom().length - 1] === card;
+    if (isLastCard) {
+      const discardPile = this.state.discardPiles.find((pile) => {
+        const topCard = pile()[pile().length - 1];
+        const correctValue = this.canPlaceCardOnCardByValue({
+          cardOnPile: topCard,
+          cardToPlace: card,
+          cardOrder: DISCARD_PILE_CARD_ORDER,
+        });
+        if (!correctValue) {
+          return false;
+        } else if (!topCard) {
+          return true;
+        } else {
+          return card.type === topCard.type;
+        }
       });
-      if (!correctValue) {
-        return false;
-      } else if (!topCard) {
-        return true;
-      } else {
-        return card.type === topCard.type;
+      if (discardPile) {
+        this.moveCardToPile(card, pileCardIsFrom, discardPile);
+        return;
       }
-    });
-    if (discardPile) {
-      this.moveCardToPile(card, pileCardIsFrom, discardPile);
-      return;
     }
 
     const normalPile = this.state.cardPiles.find((pile) => {
