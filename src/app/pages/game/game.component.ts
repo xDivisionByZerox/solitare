@@ -1,4 +1,4 @@
-import { Component, computed, inject, WritableSignal } from '@angular/core';
+import { Component, computed, effect, inject, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, fromEvent, map } from 'rxjs';
 import { CardPileComponent } from '../../components/card-pile/card-pile.component';
@@ -27,10 +27,8 @@ export class GameComponent {
   );
   readonly cardWidth = computed(() => {
     const padding = 8;
-    const paddingTotal = padding * 2;
-    const gap = 8;
-    const gapTotal = gap * this.state.cardPiles.length - 1;
-    return Math.floor((this.windowWidth() - paddingTotal - gapTotal) / this.state.cardPiles.length);
+    const paddingTotal = padding * (2 + this.state.cardPiles.length);
+    return Math.floor((this.windowWidth() - paddingTotal) / this.state.cardPiles.length);
   });
 
   currentDrawCardAction(card: PlayCard) {
