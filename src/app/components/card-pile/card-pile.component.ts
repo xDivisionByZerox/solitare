@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { PlayCardComponent } from '../play-card/play-card.component';
 import { PlayCard } from '../../models/card';
 
@@ -8,9 +8,10 @@ import { PlayCard } from '../../models/card';
     @for (card of cards(); track card) {
       <app-play-card
         [card]="card"
-        [isFrontUp]="$last"
+        [isFrontUp]="card.isVisable"
         [style.z-index]="$index"
-        [style.transform]="mode() === 'stack' ? null : 'translateY(' + 16 * $index + 'px)'"
+        [style.transform]="mode() === 'stack' ? null : 'translateY(' + 32 * $index + 'px)'"
+        (click)="onCardClicked.emit(card)"
       />
     }
   `,
@@ -38,6 +39,8 @@ export class CardPileComponent {
   readonly width = input<number>(0);
   readonly cards = input<PlayCard[]>([]);
   readonly mode = input<'stack' | 'stacked-row'>('stack');
+
+  readonly onCardClicked = output<PlayCard>();
 
   readonly height = computed(() => (this.width() / 2) * 3);
 }

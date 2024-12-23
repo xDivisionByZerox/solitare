@@ -1,7 +1,7 @@
 <div id="top-area">
   <div id="discard-area" class="card-pile-row">
-    @for (discardPile of state.discardPiles(); track $index) {
-      <app-card-pile [width]="cardWidth()" [cards]="discardPile" />
+    @for (discardPile of state.discardPiles; track $index) {
+      <app-card-pile [width]="cardWidth()" [cards]="discardPile()" />
     }
   </div>
 
@@ -14,7 +14,7 @@
 </div>
 
 <div id="play-area" class="card-pile-row">
-  @for (cardPile of state.cardPiles(); track cardPile) {
-    <app-card-pile [width]="cardWidth()" [cards]="cardPile" [mode]="'stacked-row'" />
+  @for (cardPile of state.cardPiles; track cardPile) {
+    <app-card-pile [width]="cardWidth()" [cards]="cardPile()" [mode]="'stacked-row'" (onCardClicked)="cardAction($event, cardPile)" />
   }
 </div>
