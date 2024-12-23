@@ -7,7 +7,7 @@ import { PlayCard } from '../../models/card';
   imports: [CardImagePipe],
   template: `
     @if (isFrontUp()) {
-      <img [src]="card() | cardImage" style="max-width: 100%; max-height: 100%;" />
+      <img [src]="card() | cardImage" draggable="false" />
     } @else {
       <div class="card-back">
         <div class="card-back-background"></div>
@@ -24,15 +24,21 @@ import { PlayCard } from '../../models/card';
       outline: 1px solid black;
     }
 
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      pointer-events: none;
+    }
+
     .card-back {
       padding: 2px;
       max-height: 100%;
       max-width: 100%;
-      height: 100%
+      height: 100%;
     }
 
     .card-back-background {
-      background-image: url("/cards/backgrounds/diamond.svg");
+      background-image: url('/cards/backgrounds/diamond.svg');
       background-repeat: repeat;
       background-size: 4px;
       height: 100%;
