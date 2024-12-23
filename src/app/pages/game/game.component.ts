@@ -39,7 +39,7 @@ export class GameComponent {
     }
 
     const discardPile = this.state.discardPiles.find((pile) => {
-      const topCard = pile()[pile.length - 1];
+      const topCard = pile()[pile().length - 1];
       const correctValue = this.canPlaceCardOnCardByValue({
         cardOnPile: topCard,
         cardToPlace: card,
