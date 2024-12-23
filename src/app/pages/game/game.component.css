@@ -4,7 +4,7 @@
   height: calc(100vh - (2 * var(--padding)));
   padding: var(--padding);
   display: block;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   background:
     radial-gradient(#007100, 15%, transparent 16%) 0 0,
