@@ -5,7 +5,7 @@ import { PlayCard } from '../../models/card';
 @Component({
   selector: 'app-card-pile',
   template: `
-    @for (card of cards(); track card) {
+    @for (card of cards(); track card.id) {
       <app-play-card
         [card]="card"
         [isFrontUp]="card.isVisable"

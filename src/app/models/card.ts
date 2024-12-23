@@ -3,6 +3,7 @@ export type PlayCardColor = 'BLACK' | 'RED';
 export type PlayCardValue = '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | 'J' | 'Q' | 'K' | 'A';
 
 export class PlayCard {
+  readonly id: string;
   readonly color: PlayCardColor;
   isVisable = false;
 
@@ -10,6 +11,7 @@ export class PlayCard {
     readonly type: PlayCardType,
     readonly value: PlayCardValue,
   ) {
+    this.id = `${this.type}-${this.value}`;
     this.color = this.type === 'CLUBS' || this.type === 'SPADES' ? 'BLACK' : 'RED';
   }
 }

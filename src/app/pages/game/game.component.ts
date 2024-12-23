@@ -33,7 +33,11 @@ export class GameComponent {
     return Math.floor((this.windowWidth() - paddingTotal - gapTotal) / this.state.cardPiles.length);
   });
 
-  cardAction(card: PlayCard, pileCardIsFrom: WritableSignal<PlayCard[]>): void {
+  tryToPlayCard(card: PlayCard, pileCardIsFrom: WritableSignal<PlayCard[]>): void {
+    if(!card.isVisable) {
+      return;
+    }
+
     const discardPile = this.state.discardPiles.find((pile) => {
       const topCard = pile()[pile.length - 1];
       const correctValue = this.canPlaceCardOnCardByValue({
@@ -77,8 +81,10 @@ export class GameComponent {
   }
 
   private moveCardToPile(card: PlayCard, fromPile: WritableSignal<PlayCard[]>, toPile: WritableSignal<PlayCard[]>) {
+    const cardIndex = fromPile().findIndex((c) => c === card);
+    const cardsToMove = fromPile().slice(cardIndex);
     fromPile.update((pile) => {
-      pile.splice(pile.length - 1, 1);
+      pile.splice(cardIndex, cardsToMove.length);
       const newTopCard = pile[pile.length - 1];
       if(newTopCard) {
         newTopCard.isVisable = true;
@@ -86,7 +92,7 @@ export class GameComponent {
       return pile;
     });
     toPile.update((pile) => {
-      pile.push(card);
+      pile.push(...cardsToMove);
       return pile;
     });
   }
