@@ -1,5 +1,5 @@
-import { Component, computed, effect, inject, WritableSignal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, WritableSignal } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, fromEvent, map } from 'rxjs';
 import { CardPileComponent } from '../../components/card-pile/card-pile.component';
 import { PlayCard, PlayCardColor, PlayCardValue } from '../../models/card';
@@ -30,6 +30,13 @@ export class GameComponent {
     const paddingTotal = padding * (2 + this.state.cardPiles.length);
     return Math.floor((this.windowWidth() - paddingTotal) / this.state.cardPiles.length);
   });
+
+  constructor() {
+    this.state.hasWon$.pipe(takeUntilDestroyed()).subscribe(() => {
+      alert('🎉🎉 Du hast gewonnen 🎉🎉🎉\n\nHerzlichen Glückwunsch. Ein neues Spiel wird gestartet sobald du auf "Ok" drückst.');
+      location.reload();
+    });
+  }
 
   currentDrawCardAction(card: PlayCard) {
     const cardIndex = this.state.activeDrawCards().findIndex((c) => c === card);

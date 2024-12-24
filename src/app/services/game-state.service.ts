@@ -1,5 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { PlayCard, PlayCardType, PlayCardValue } from '../models/card';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 
 const ALL_TYPES: PlayCardType[] = ['CLUBS', 'SPADES', 'HEARTS', 'DIAMONDS'];
 const ALL_VALUES: PlayCardValue[] = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -49,6 +51,10 @@ export class GameStateService {
     signal<PlayCard[]>([]),
     signal<PlayCard[]>([]),
   ];
+
+  readonly hasWon$ = toObservable(computed(() => this.discardPiles.every((pile) => pile().length === 13))).pipe(
+    filter(Boolean),
+  );
 
   constructor() {
     const cards = getAllCardsInRandomOrder();
@@ -101,6 +107,6 @@ export class GameStateService {
       return reverseArray(newDraw);
     });
     this.drawPile.update((pile) => pile.filter((_, index) => index > 2));
-    console.log('new draw pile', JSON.stringify(this.drawPile().map(c => c.id)))
+    console.log('new draw pile', JSON.stringify(this.drawPile().map((c) => c.id)));
   }
 }
