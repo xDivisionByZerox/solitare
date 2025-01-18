@@ -7,4 +7,9 @@ body {
   box-sizing: border-box;
   
   user-select: none;
+  font-family: sans-serif;
+}
+
+:root {
+  --color-red: rgb(255, 85, 85);
 }

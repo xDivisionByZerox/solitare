@@ -20,7 +20,7 @@ npm run start
 
 I suck at design, so I borrowed some ideas from other sources:
 
-- Card SVG's are from Wikipedia: https://en.wikipedia.org/wiki/Standard_52-card_deck#SVG
+- Card SVG symbols are from Wikipedia: https://en.wikipedia.org/wiki/Standard_52-card_deck#SVG
 - The logo is AI generated (I'm sorry artists)
 - original game design is some random solitare app on the google play store: https://play.google.com/store/apps/details?id=com.lemongame.klondike.solitaire
 
